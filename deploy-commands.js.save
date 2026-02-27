@@ -1,0 +1,59 @@
+const { REST } = require('@discordjs/rest');
+const { Routes } = require('discord-api-types/v10');
+
+const clientId = 'COLOQUE_AQUI_O_ID_DO_SEU_BOT';
+const guildId = 'COLOQUE_AQUI_O_ID_DO_SEU_SERVIDOR';
+const token = 'COLOQUE_AQUI_O_TOKEN_DO_BOT';
+
+const commands = [
+  {
+    name: 'kick',
+    description: 'Expulsa um usuário do servidor',
+    options: [
+      {
+        type: 6,
+        name: 'usuario',
+        description: 'Usuário que será expulso',
+        required: true,
+      },
+    ],
+  },
+  {
+    name: 'ban',
+    description: 'Bane um usuário do servidor',
+    options: [
+      {
+        type: 6,
+        name: 'usuario',
+        description: 'Usuário que será banido',
+        required: true,
+      },
+    ],
+  },
+  {
+    name: 'clear',
+    description: 'Apaga mensagens do canal',
+    options: [
+      {
+        type: 4,
+        name: 'quantidade',
+        description: 'Número de mensagens a apagar (1-100)',
+        required: true,
+      },
+    ],
+  },
+];
+
+const rest = new REST({ version: '10' }).setToken(token);
+
+(async () => {
+  try {
+    console.log('📤 A atualizar comandos no Discord...');
+    await rest.put(Routes.applicationGuildCommands(clientId, guildId), {
+      body: commands,
+    });
+    console.log('✅ Comandos registados com sucesso!');
+  } catch (error) {
+    console.error(error);
+  }
+})();
