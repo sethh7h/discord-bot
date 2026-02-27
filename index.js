@@ -1,4 +1,6 @@
-require("dotenv").config();
+if (!process.env.DISCORD_TOKEN) {
+    require("dotenv").config();
+}
 
 const { Client, GatewayIntentBits, PermissionsBitField } = require("discord.js");
 
